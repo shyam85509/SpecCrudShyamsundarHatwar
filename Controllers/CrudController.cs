@@ -77,23 +77,30 @@ namespace SpecCrudPro.Controllers
         [HttpPost]
         public IActionResult Edit(int? id, RegisterModel obj)
         {
-            if(obj == null)
+            if (ModelState.IsValid)
             {
-                ViewBag.message = "Select Data";
-            }
-            else
-            {
-                _context.Update(obj);
-                int x = _context.SaveChanges();
-                if(x == 0)
+                if (obj == null)
                 {
-                    ViewBag.message = "Data not Saved";
+                    ViewBag.message = "Select Data";
                 }
                 else
                 {
-                    return RedirectToAction("ShowAll");
+                    _context.Update(obj);
+                    int x = _context.SaveChanges();
+                    if (x == 0)
+                    {
+                        return RedirectToAction("Edit");                    }
+                    else
+                    {
+                        return RedirectToAction("ShowAll");
+                    }
                 }
             }
+            else
+            {
+                return RedirectToAction("Edit");
+            }
+            
             return View();
         }
 
@@ -107,6 +114,7 @@ namespace SpecCrudPro.Controllers
                 if(x > 0)
                 {
                     return RedirectToAction("showAll");
+                    TempData["dltmsgsucces"] = "One record removed";
                 }
                 else
                 {

@@ -36,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Crud}/{action=Register}/{id?}");
+    pattern: "{controller=Crud}/{action=showAll}/{id?}");
 
 app.Run();
